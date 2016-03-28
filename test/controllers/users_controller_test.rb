@@ -52,7 +52,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_not @other_user.reload.admin?
   end
 
-  test "shoul redirect destory when not logged in" do
+  test "should redirect destory when not logged in" do
     assert_no_difference 'User.count' do
       delete :destroy, id: @user
     end
