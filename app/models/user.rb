@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	has_many :microposts, dependent: :destroy
 
 	attr_accessor :remember_token, :activation_token, :reset_token
 
@@ -32,8 +33,9 @@ class User < ActiveRecord::Base
 
 	# Activates an account
 	def activate
-		update_attribute(:activated, true)
-		update_attribute(:activated_at, Time.zone.now)
+		#update_attribute(:activated, true)
+		#update_attribute(:activated_at, Time.zone.now)
+		update_columns(activated: true, activated_at: Time.zone.now)
 	end
 
 	# Sends activation email
@@ -57,6 +59,12 @@ class User < ActiveRecord::Base
 	# Returns true if a password reset has expired
 	def password_reset_expired?
 		reset_sent_at < 2.hours.ago
+	end
+
+	# Defines a proto-feed
+	# See "following users" for the full implementation
+	def feed
+		Micropost.where("user_id = ?", id)
 	end
 
 	# Class methods

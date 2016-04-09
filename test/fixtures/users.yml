@@ -20,7 +20,7 @@ lana:
   activated: true
   activated_at: <%= Time.zone.now %>
 
-archer:
+steve:
   name: "Steve Moore"
   email: "steve.moore@choice.com"
   password_digest: <%= User.digest('password1') %>
