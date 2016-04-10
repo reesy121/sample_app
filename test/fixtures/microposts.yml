@@ -36,12 +36,17 @@ love:
   created_at: <%= 2.years.ago %>
   user: lana
 
+life:
+  content: "Oh baby i life you"
+  created_at: <%= 2.years.ago %>
+  user: lana
+
 tone:
   content: "Buy why the shakey tone with me son!"
   created_at: <%= 2.years.ago %>
   user: steve
 
-tone:
+backbone:
   content: "Dude, this van's, like, rolling probable cuase"
   created_at: <%= 2.years.ago %>
   user: steve

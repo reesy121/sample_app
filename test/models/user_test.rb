@@ -63,4 +63,33 @@ class UserTest < ActiveSupport::TestCase
 	test "authenicated? should return false for a user with nil digest" do
 		assert_not @user.authenticated?(:remember, '')
 	end
+
+	test "should follow and unfollow a user" do
+		david = users(:david)
+		rees = users(:rees)
+		assert_not david.following?(rees)
+		david.follow(rees)
+		assert david.following?(rees)
+		assert rees.followers.include?(david)
+		david.unfollows(rees)
+		assert_not david.following?(rees)
+	end
+
+	test "feed shoud have the right posts" do
+		david  = users(:david)
+		archer = users(:archer)
+		lana   = users(:lana)
+		# Posts from followed user
+		lana.microposts do |post_following|
+			assert david.feed.include?(post_following)
+		end 
+		# Posts from self
+		david.microposts do |post_self|
+			assert david.feed.include?(post_self)
+		end
+		# Posts from unfollowed user
+		archer.microposts.each do |post_unfollowed|
+			assert_not lana.feed.include?(post_unfollowed)
+		end
+	end
 end
